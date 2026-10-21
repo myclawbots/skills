@@ -1,0 +1,29 @@
+{
+  "name": "carousel-renderer",
+  "version": "1.0.0",
+  "description": "Turns structured JSON decks into trending, publication-ready social carousel PNGs",
+  "scripts": {
+    "fonts": "node scripts/get-fonts.js",
+    "render": "node render.js content.example.json out",
+    "render:neon": "node render.js content.neon-mythbusting.json out/neon --theme neon",
+    "render:earthy": "node render.js content.earthy-wishiknew.json out/earthy --theme earthy",
+    "render:brutalist": "node render.js content.brutalist-hottakes.json out/brutalist --theme brutalist",
+    "render:luxury": "node render.js content.luxury-stepbystep.json out/luxury --theme luxury",
+    "render:all": "npm run render && npm run render:neon && npm run render:earthy && npm run render:brutalist && npm run render:luxury",
+    "platforms": "node render.js --list-platforms"
+  },
+  "keywords": [
+    "carousel",
+    "instagram",
+    "linkedin",
+    "social-media",
+    "playwright",
+    "generator"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "playwright": "^1.62.1"
+  },
+  "type": "module"
+}

@@ -1,0 +1,182 @@
+#!/bin/bash
+# gws-proxy — Fetches a fresh access token from the proxy, then delegates to gws.
+# Two copies on every agent, same file: /usr/local/bin/gws (baked into the
+# image) and /root/.openclaw/skills/google-workspace/scripts/gws (synced with
+# the skill at boot, so it is current even on an older image). Multi-account
+# work uses the skill copy for that reason.
+#
+# Env vars used:
+#   GWS_TOKEN_PROXY_URL  — e.g. http://my-claw-bots-prod.internal:3001/google/token
+#   PROXY_API_KEY        — API key for the proxy
+#   GWS_ACCOUNT          — optional: which connected Google account to act as
+#
+# If both are set, fetches a short-lived access token and exports
+# GOOGLE_WORKSPACE_CLI_TOKEN so gws uses it automatically.
+#
+# Multiple Google accounts (the gws CLI itself dropped multi-account support,
+# so the account is chosen here, before gws runs):
+#   gws accounts                          — list connected accounts, default first
+#   gws --account work@x.com gmail …      — act as that account for this call
+# Without --account (or GWS_ACCOUNT) the agent's default account is used.
+
+set -euo pipefail
+
+GWS_REAL="${GWS_REAL_BIN:-/usr/local/bin/gws-real}"
+ACCOUNT="${GWS_ACCOUNT:-}"
+ARGS=()
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --account)
+            if [ $# -lt 2 ] || [ -z "$2" ]; then
+                echo "gws-proxy: --account needs an email address (see: gws accounts)" >&2
+                exit 2
+            fi
+            ACCOUNT="$2"
+            shift 2
+            ;;
+        --account=*)
+            ACCOUNT="${1#--account=}"
+            shift
+            ;;
+        *)
+            ARGS+=("$1")
+            shift
+            ;;
+    esac
+done
+
+# ── Sending Gmail ────────────────────────────────────────────────────────
+# Agent access tokens cannot send mail: every email goes through the
+# api-proxy's /google/send, which refuses recipients who unsubscribed and adds
+# an unsubscribe link + List-Unsubscribe headers (Google data-safety review,
+# 2026-10-03). So `gmail +send` is handled here, and the other send-capable
+# helpers point at it instead of failing with a permissions error.
+if [ "${ARGS[0]:-}" = "gmail" ]; then
+    case "${ARGS[1]:-}" in
+        +reply|+reply-all|+forward)
+            echo "gws-proxy: ${ARGS[1]} is not available. Use: gws gmail +send --to <email> --subject \"Re: …\" --body \"…\"" >&2
+            exit 2 ;;
+    esac
+    case "${ARGS[1]:-} ${ARGS[2]:-} ${ARGS[3]:-}" in
+        "users messages send"|"users drafts send"|"users messages import"|"users messages insert")
+            echo "gws-proxy: send email with: gws gmail +send --to <email> --subject \"…\" --body \"…\"" >&2
+            exit 2 ;;
+    esac
+    if [ "${ARGS[1]:-}" = "+send" ]; then
+        if [ -z "${GWS_TOKEN_PROXY_URL:-}" ] || [ -z "${PROXY_API_KEY:-}" ]; then
+            echo "gws-proxy: Google Workspace is not configured on this machine" >&2
+            exit 1
+        fi
+        TO=""; CC=""; BCC=""; SUBJECT=""; BODY=""; HTML=false; ATTACH=()
+        i=2
+        while [ $i -lt ${#ARGS[@]} ]; do
+            flag="${ARGS[$i]}"; val="${ARGS[$((i+1))]:-}"
+            case "$flag" in
+                --to) TO="$val"; i=$((i+2)) ;;
+                --cc) CC="$val"; i=$((i+2)) ;;
+                --bcc) BCC="$val"; i=$((i+2)) ;;
+                --subject) SUBJECT="$val"; i=$((i+2)) ;;
+                --body) BODY="$val"; i=$((i+2)) ;;
+                --html) HTML=true; i=$((i+1)) ;;
+                --from) i=$((i+2)) ;;   # the account is chosen with --account
+                --attach|-a)
+                    [ -n "$val" ] || { echo "gws-proxy: --attach needs a file path" >&2; exit 2; }
+                    [ -f "$val" ] && [ -r "$val" ] || { echo "gws-proxy: cannot read attachment: $val" >&2; exit 2; }
+                    ATTACH+=("$val"); i=$((i+2)) ;;
+                --draft)
+                    echo "gws-proxy: Gmail drafts are not available; show the user the text and send once they approve" >&2
+                    exit 2 ;;
+                --dry-run)
+                    echo "gws-proxy: dry run — would send to ${TO:-?}: ${SUBJECT:-?}"; exit 0 ;;
+                *) echo "gws-proxy: unknown option for gmail +send: $flag" >&2; exit 2 ;;
+            esac
+        done
+        # Attachments go base64 through temp files: a few MB would overflow
+        # the argument limit if passed to jq/curl on the command line.
+        WORK=$(mktemp -d)
+        trap 'rm -rf "$WORK"' EXIT
+        echo '[]' > "$WORK/att.json"
+        for f in ${ATTACH[@]+"${ATTACH[@]}"}; do
+            base64 < "$f" | tr -d '\n' > "$WORK/data.b64"
+            jq --arg name "$(basename "$f")" --rawfile data "$WORK/data.b64" \
+                '. + [{filename: $name, data: $data}]' "$WORK/att.json" > "$WORK/att.next" && mv "$WORK/att.next" "$WORK/att.json"
+        done
+        jq -cn --arg agent "${PROJECT_ID:-}" --arg account "$ACCOUNT" --arg to "$TO" --arg cc "$CC" \
+            --arg bcc "$BCC" --arg subject "$SUBJECT" --arg body "$BODY" --argjson html "$HTML" \
+            --slurpfile att "$WORK/att.json" \
+            '{agent_id: $agent, to: $to, cc: $cc, bcc: $bcc, subject: $subject, body: $body, html: $html}
+             + (if $account == "" then {} else {account: $account} end)
+             + (if ($att[0] | length) > 0 then {attachments: $att[0]} else {} end)' > "$WORK/body.json"
+        RESP=$(curl -s -X POST -H "x-api-key: $PROXY_API_KEY" -H "Content-Type: application/json" \
+            --data-binary @"$WORK/body.json" "${GWS_TOKEN_PROXY_URL%/token}/send" 2>/dev/null || true)
+        if echo "$RESP" | jq -e '.id' >/dev/null 2>&1; then
+            echo "$RESP" | jq -r '"Sent from \(.from) to \(.to | join(", "))\((if (.cc|length)>0 then " (cc \(.cc|join(", ")))" else "" end))\((if ((.attachments // [])|length)>0 then " with \(.attachments|join(", "))" else "" end)). Message id: \(.id). It includes an unsubscribe link."'
+            exit 0
+        fi
+        DETAIL=$(echo "$RESP" | jq -r '[.error, .detail] | map(select(. != null)) | join(" — ")' 2>/dev/null || true)
+        echo "gws-proxy: not sent — ${DETAIL:-could not reach the send service}" >&2
+        exit 1
+    fi
+fi
+
+if [ "${ARGS[0]:-}" = "accounts" ]; then
+    if [ -z "${GWS_TOKEN_PROXY_URL:-}" ] || [ -z "${PROXY_API_KEY:-}" ]; then
+        echo "gws-proxy: Google Workspace is not configured on this machine" >&2
+        exit 1
+    fi
+    ACCOUNTS_URL="${GWS_TOKEN_PROXY_URL%/token}/accounts"
+    if [ -n "${PROJECT_ID:-}" ]; then
+        ACCOUNTS_URL="${ACCOUNTS_URL}?agent_id=${PROJECT_ID}"
+    fi
+    ACCOUNTS_JSON=$(curl -sf -H "x-api-key: $PROXY_API_KEY" "$ACCOUNTS_URL" 2>/dev/null || true)
+    if [ -z "$ACCOUNTS_JSON" ]; then
+        echo "gws-proxy: could not list Google accounts" >&2
+        exit 1
+    fi
+    echo "$ACCOUNTS_JSON" | jq -r '
+        if (.accounts | length) == 0 then "No Google account is connected."
+        else .accounts[] | .email + (if .default then "  (default)" else "" end) end'
+    exit 0
+fi
+
+if [ -n "${GWS_TOKEN_PROXY_URL:-}" ] && [ -n "${PROXY_API_KEY:-}" ]; then
+    REQUEST_BODY=$(jq -cn --arg agent "${PROJECT_ID:-}" --arg account "$ACCOUNT" \
+        '{agent_id: $agent} + (if $account == "" then {} else {account: $account} end)')
+    # No -f: a 404 for an unknown account carries the list of real ones.
+    TOKEN_JSON=$(curl -s -X POST \
+        -H "x-api-key: $PROXY_API_KEY" \
+        -H "Content-Type: application/json" \
+        -d "$REQUEST_BODY" \
+        "$GWS_TOKEN_PROXY_URL" 2>/dev/null || true)
+    ACCESS_TOKEN=""
+    if [ -n "$TOKEN_JSON" ]; then
+        ACCESS_TOKEN=$(echo "$TOKEN_JSON" | jq -r '.access_token // empty' 2>/dev/null || true)
+    fi
+    if [ -n "$ACCESS_TOKEN" ]; then
+        export GOOGLE_WORKSPACE_CLI_TOKEN="$ACCESS_TOKEN"
+    elif [ -n "$ACCOUNT" ]; then
+        # Never fall back to the default account: that would act as the wrong
+        # person (send from the wrong address, write to the wrong calendar).
+        DETAIL=$(echo "$TOKEN_JSON" | jq -r '[.error, .detail] | map(select(. != null)) | join(": ")' 2>/dev/null || true)
+        KNOWN=$(echo "$TOKEN_JSON" | jq -r '(.accounts // []) | join(", ")' 2>/dev/null || true)
+        echo "gws-proxy: cannot use Google account $ACCOUNT${DETAIL:+ — $DETAIL}" >&2
+        if [ -n "$KNOWN" ]; then
+            echo "gws-proxy: connected accounts: $KNOWN" >&2
+        fi
+        exit 1
+    elif [ -n "$TOKEN_JSON" ]; then
+        echo "gws-proxy: WARNING — token response did not contain access_token" >&2
+        echo "gws-proxy: response: $TOKEN_JSON" >&2
+    else
+        echo "gws-proxy: WARNING — failed to fetch token from $GWS_TOKEN_PROXY_URL" >&2
+    fi
+elif [ -n "$ACCOUNT" ]; then
+    echo "gws-proxy: Google Workspace is not configured on this machine" >&2
+    exit 1
+fi
+
+# Delegate to the real gws binary (renamed during Docker build). It carries a
+# platform token, never a vault stand-in, so it bypasses the vault HTTPS proxy
+# the exec wrapper may have set: it must not depend on the vault being up
+# (docs/secrets-vault-v2.md D17).
+exec env -u HTTPS_PROXY -u https_proxy -u NODE_USE_ENV_PROXY "$GWS_REAL" ${ARGS[@]+"${ARGS[@]}"}

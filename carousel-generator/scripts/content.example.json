@@ -1,0 +1,32 @@
+{
+  "topic": "AI news",
+  "handle": "@lemmedecode",
+  "slides": [
+    {
+      "type": "hook",
+      "headline": "Your product page is invisible to ChatGPT",
+      "sub": "And it's costing you traffic you never see in analytics."
+    },
+    {
+      "type": "point",
+      "headline": "Search stopped being ten blue links",
+      "body": "Assistants read a page, decide what it means, and answer without sending anyone to your site."
+    },
+    {
+      "type": "stat",
+      "figure": "58",
+      "unit": "%",
+      "body": "of searches now end without a click. The answer already happened upstream."
+    },
+    {
+      "type": "quote",
+      "quote": "If a model can't parse your page, you don't exist in the answer.",
+      "source": "The short version of AEO"
+    },
+    {
+      "type": "cta",
+      "headline": "Fix the machine-readable layer first",
+      "body": "Structured data, clean headings, real answers above the fold. Follow for the full teardown."
+    }
+  ]
+}

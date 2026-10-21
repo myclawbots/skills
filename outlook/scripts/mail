@@ -1,0 +1,215 @@
+#!/bin/bash
+# mail — the user's Outlook / Microsoft 365 mailbox, via Microsoft Graph.
+#
+# Ships with the outlook skill (synced to every agent at boot), so it works on
+# any agent image. The access token comes from the api-proxy (/microsoft/token,
+# authenticated with this agent's PROXY_API_KEY); no Microsoft secret is ever
+# on this machine.
+#
+#   mail accounts                             connected Outlook accounts, default first
+#   mail me                                   which account this command acts as
+#   mail list [--folder inbox] [--top 10] [--unread] [--search "text"]
+#   mail read <message-id>
+#   mail draft --to a@x.com[,b@y.com] --subject "…" --body "…" [--cc …]
+#   mail reply-draft <message-id> --body "…"  [--all]
+#   mail send-draft <draft-id>
+#   mail send --to … --subject "…" --body "…" [--cc …]
+#
+# Add --account <email> (anywhere) to act as one of the user's other Outlook
+# accounts; without it the default account is used. An unknown account stops
+# the command — it never falls back to the default.
+#
+# Prefer draft → the user reviews it in Outlook → send-draft (see SKILL.md).
+
+set -euo pipefail
+
+GRAPH="https://graph.microsoft.com/v1.0"
+
+die() { echo "mail: $*" >&2; exit 1; }
+
+proxy_base() {
+    local base="${API_PROXY_URL:-${PROXY_URL:-}}"
+    if [ -z "$base" ] && [ -n "${GWS_TOKEN_PROXY_URL:-}" ]; then
+        base="${GWS_TOKEN_PROXY_URL%/google/token}"
+    fi
+    [ -n "$base" ] || die "no proxy URL configured on this machine"
+    echo "${base%/}"
+}
+
+# Sets TOKEN and USED (the account the token belongs to).
+fetch_token() {
+    [ -n "${PROXY_API_KEY:-}" ] || die "PROXY_API_KEY is not set"
+    local body resp
+    body=$(jq -cn --arg agent "${PROJECT_ID:-}" --arg account "$ACCOUNT" \
+        '{agent_id: $agent} + (if $account == "" then {} else {account: $account} end)')
+    resp=$(curl -s -X POST -H "x-api-key: $PROXY_API_KEY" -H "Content-Type: application/json" \
+        -d "$body" "$(proxy_base)/microsoft/token" 2>/dev/null || true)
+    TOKEN=$(echo "$resp" | jq -r '.access_token // empty' 2>/dev/null || true)
+    USED=$(echo "$resp" | jq -r '.account // empty' 2>/dev/null || true)
+    if [ -z "$TOKEN" ]; then
+        local why known
+        why=$(echo "$resp" | jq -r '[.error, .detail] | map(select(. != null)) | join(" — ")' 2>/dev/null || true)
+        known=$(echo "$resp" | jq -r '(.accounts // []) | join(", ")' 2>/dev/null || true)
+        [ -n "$known" ] && why="$why (connected: $known)"
+        die "${why:-could not get an Outlook token}"
+    fi
+}
+
+# Graph call with the real token: bypass the vault HTTPS proxy, like gws does.
+graph() {
+    local method="$1" path="$2" data="${3:-}"
+    local args=(-s -X "$method" -H "Authorization: Bearer $TOKEN" -H 'Prefer: outlook.body-content-type="text"' -w '\n%{http_code}')
+    if [ -n "$data" ]; then
+        args+=(-H "Content-Type: application/json" -d "$data")
+    elif [ "$method" = "POST" ]; then
+        args+=(--data '')   # Graph answers 411 to a POST without Content-Length
+    fi
+    local out code
+    out=$(env -u HTTPS_PROXY -u https_proxy -u NODE_USE_ENV_PROXY curl "${args[@]}" "$GRAPH$path")
+    code="${out##*$'\n'}"
+    out="${out%$'\n'*}"
+    if [ "${code:0:1}" != "2" ]; then
+        local msg
+        msg=$(echo "$out" | jq -r '.error.message // empty' 2>/dev/null || true)
+        die "Microsoft Graph returned $code${msg:+: $msg}"
+    fi
+    echo "$out"
+}
+
+# "a@x.com,b@y.com" → Graph recipients array
+recipients() {
+    jq -cn --arg list "$1" '$list | split(",") | map(gsub("^\\s+|\\s+$"; "")) | map(select(length > 0)) | map({emailAddress: {address: .}})'
+}
+
+urlenc() { jq -rn --arg v "$1" '$v|@uri'; }
+
+# --account may appear anywhere; everything else is passed on in order.
+ACCOUNT="${MAIL_ACCOUNT:-}"
+REST=()
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --account)
+            [ $# -ge 2 ] && [ -n "$2" ] || die "--account needs an email address (see: mail accounts)"
+            ACCOUNT="$2"; shift 2 ;;
+        --account=*) ACCOUNT="${1#--account=}"; shift ;;
+        *) REST+=("$1"); shift ;;
+    esac
+done
+set -- ${REST[@]+"${REST[@]}"}
+
+cmd="${1:-}"; [ $# -gt 0 ] && shift
+case "$cmd" in
+    accounts)
+        [ -n "${PROXY_API_KEY:-}" ] || die "PROXY_API_KEY is not set"
+        url="$(proxy_base)/microsoft/accounts"
+        [ -n "${PROJECT_ID:-}" ] && url="$url?agent_id=$(urlenc "$PROJECT_ID")"
+        resp=$(curl -s -H "x-api-key: $PROXY_API_KEY" "$url" 2>/dev/null || true)
+        echo "$resp" | jq -e '.accounts' >/dev/null 2>&1 || die "could not list Outlook accounts"
+        echo "$resp" | jq -r '
+            if (.accounts | length) == 0 then "No Outlook account is connected."
+            else .accounts[] | .email + (if .default then "  (default)" else "" end) end'
+        ;;
+
+    me)
+        fetch_token
+        graph GET "/me?\$select=displayName,mail,userPrincipalName" \
+            | jq -r '"\(.mail // .userPrincipalName)  (\(.displayName // "no name"))"'
+        ;;
+
+    list)
+        folder="inbox"; top=10; unread=""; search=""
+        while [ $# -gt 0 ]; do
+            case "$1" in
+                --folder) folder="$2"; shift 2 ;;
+                --top) top="$2"; shift 2 ;;
+                --unread) unread=1; shift ;;
+                --search) search="$2"; shift 2 ;;
+                *) die "unknown option for list: $1" ;;
+            esac
+        done
+        [[ "$top" =~ ^[0-9]+$ ]] || die "--top must be a number"
+        q="\$top=$top&\$select=id,subject,from,receivedDateTime,isRead,bodyPreview"
+        # Graph refuses $orderby together with $search; search results come ranked.
+        if [ -n "$search" ]; then
+            q="$q&\$search=$(urlenc "\"$search\"")"
+        else
+            q="$q&\$orderby=receivedDateTime%20desc"
+            [ -n "$unread" ] && q="$q&\$filter=isRead%20eq%20false"
+        fi
+        fetch_token
+        graph GET "/me/mailFolders/$(urlenc "$folder")/messages?$q" | jq -r '
+            if (.value | length) == 0 then "No messages."
+            else .value[] | "\(.id)\n  \(if .isRead then " " else "●" end) \(.receivedDateTime)  \(.from.emailAddress.name // "") <\(.from.emailAddress.address // "")>\n  \(.subject // "(no subject)")\n  \(.bodyPreview // "" | gsub("\\s+"; " ") | .[0:160])\n" end'
+        ;;
+
+    read)
+        id="${1:-}"; [ -n "$id" ] || die "usage: mail read <message-id>"
+        fetch_token
+        graph GET "/me/messages/$(urlenc "$id")?\$select=subject,from,toRecipients,ccRecipients,receivedDateTime,body,webLink" | jq -r '
+            "From:    \(.from.emailAddress.name // "") <\(.from.emailAddress.address // "")>",
+            "To:      \([.toRecipients[].emailAddress.address] | join(", "))",
+            (if (.ccRecipients | length) > 0 then "Cc:      \([.ccRecipients[].emailAddress.address] | join(", "))" else empty end),
+            "Date:    \(.receivedDateTime)",
+            "Subject: \(.subject // "(no subject)")",
+            "",
+            (.body.content // ""),
+            "",
+            "Open in Outlook: \(.webLink // "")"'
+        ;;
+
+    draft|send)
+        to=""; cc=""; subject=""; body=""
+        while [ $# -gt 0 ]; do
+            case "$1" in
+                --to) to="$2"; shift 2 ;;
+                --cc) cc="$2"; shift 2 ;;
+                --subject) subject="$2"; shift 2 ;;
+                --body) body="$2"; shift 2 ;;
+                *) die "unknown option for $cmd: $1" ;;
+            esac
+        done
+        [ -n "$to" ] || die "--to is required"
+        [ -n "$subject" ] || die "--subject is required"
+        msg=$(jq -cn --arg s "$subject" --arg b "$body" --argjson to "$(recipients "$to")" --argjson cc "$(recipients "$cc")" \
+            '{subject: $s, body: {contentType: "Text", content: $b}, toRecipients: $to} + (if ($cc | length) > 0 then {ccRecipients: $cc} else {} end)')
+        fetch_token
+        if [ "$cmd" = "draft" ]; then
+            graph POST "/me/messages" "$msg" | jq -r --arg u "$USED" '"Draft saved in \($u) → Drafts.\nDraft id: \(.id)\nReview it: \(.webLink // "")"'
+        else
+            graph POST "/me/sendMail" "$(jq -cn --argjson m "$msg" '{message: $m, saveToSentItems: true}')" >/dev/null
+            echo "Sent from $USED to $to (a copy is in Sent Items)."
+        fi
+        ;;
+
+    reply-draft)
+        id="${1:-}"; [ -n "$id" ] || die "usage: mail reply-draft <message-id> --body \"…\" [--all]"
+        shift
+        body=""; all=""
+        while [ $# -gt 0 ]; do
+            case "$1" in
+                --body) body="$2"; shift 2 ;;
+                --all) all=1; shift ;;
+                *) die "unknown option for reply-draft: $1" ;;
+            esac
+        done
+        fetch_token
+        action="createReply"; [ -n "$all" ] && action="createReplyAll"
+        graph POST "/me/messages/$(urlenc "$id")/$action" "$(jq -cn --arg b "$body" '{comment: $b}')" \
+            | jq -r --arg u "$USED" '"Reply draft saved in \($u) → Drafts.\nDraft id: \(.id)\nReview it: \(.webLink // "")"'
+        ;;
+
+    send-draft)
+        id="${1:-}"; [ -n "$id" ] || die "usage: mail send-draft <draft-id>"
+        fetch_token
+        graph POST "/me/messages/$(urlenc "$id")/send" >/dev/null
+        echo "Draft sent from $USED (a copy is in Sent Items)."
+        ;;
+
+    ""|-h|--help|help)
+        sed -n '2,23p' "$0" | sed 's/^# \{0,1\}//'
+        ;;
+
+    *)
+        die "unknown command: $cmd (try: mail help)"
+        ;;
+esac

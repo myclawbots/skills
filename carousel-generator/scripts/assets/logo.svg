@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" width="200" height="60">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00D4FF" />
+      <stop offset="100%" stop-color="#FF3CAC" />
+    </linearGradient>
+  </defs>
+  <rect x="2" y="10" width="40" height="40" rx="10" fill="url(#grad)" />
+  <path d="M14 30 L22 38 L30 22" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="52" y="38" fill="#FFFFFF" font-family="system-ui, -apple-system, sans-serif" font-weight="800" font-size="24" letter-spacing="-0.5">DECODE</text>
+</svg>

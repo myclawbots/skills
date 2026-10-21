@@ -20,10 +20,9 @@ or copy the folder: `npx degit myclawbots/skills/<slug> ~/.claude/skills/<slug>`
 
 ## What is here
 
-This repository mirrors the MIT-licensed skills from the MyClawBots skills registry; it is updated
+This repository mirrors every skill in the MyClawBots skills registry (all MIT-licensed); it is updated
 automatically on every production release. Each skill's `SKILL.md` frontmatter names its author,
-license, category and tags. Skills that are not MIT-licensed are published on myclawbots.ai/skills
-only.
+license, category and tags.
 
 ## Contribute
 

@@ -1,0 +1,49 @@
+{
+  "topic": "AI myths",
+  "handle": "@lemmedecode",
+  "logo": "./assets/logo.svg",
+  "slides": [
+    {
+      "type": "hook",
+      "kicker": "TECH REALITY CHECK",
+      "headline": "5 AI myths that need to die",
+      "sub": "You've heard them all. Most of them are wrong."
+    },
+    {
+      "type": "point",
+      "headline": "AI will replace all jobs",
+      "body": "It won't. It replaces tasks. The people who learn to use it replace the people who don't."
+    },
+    {
+      "type": "point",
+      "headline": "More data always wins",
+      "body": "Garbage in, garbage out. A clean 10K dataset beats a noisy 10M one every single time."
+    },
+    {
+      "type": "stat",
+      "figure": "82",
+      "unit": "%",
+      "body": "of AI projects fail before production. The bottleneck is never the model."
+    },
+    {
+      "type": "list",
+      "headline": "What actually moves the needle",
+      "items": [
+        "High-fidelity prompt architecture",
+        "Deterministic guardrails & eval sets",
+        "Tight human-in-the-loop loops"
+      ]
+    },
+    {
+      "type": "quote",
+      "quote": "The biggest risk isn't AI taking your job. It's you ignoring AI while someone else doesn't.",
+      "source": "Every hiring manager in 2026"
+    },
+    {
+      "type": "cta",
+      "headline": "Stop believing the hype",
+      "body": "Start learning what actually works. Level up your AI engineering today.",
+      "action": "follow"
+    }
+  ]
+}

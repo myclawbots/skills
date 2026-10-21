@@ -1,0 +1,39 @@
+{
+  "topic": "Hot takes",
+  "handle": "@lemmedecode",
+  "slides": [
+    {
+      "type": "hook",
+      "kicker": "HOT TAKE #44",
+      "headline": "Productivity advice is mostly a scam",
+      "sub": "Controversial? Maybe. But hear me out."
+    },
+    {
+      "type": "point",
+      "headline": "Wake up at 5am is pure cope",
+      "body": "Sleep deprivation doesn't make you disciplined. It makes you slow and cranky."
+    },
+    {
+      "type": "stat",
+      "figure": "91",
+      "unit": "%",
+      "body": "of to-do list items never get done. The list isn't the problem. Your priorities are."
+    },
+    {
+      "type": "point",
+      "headline": "Hustle culture is a pyramid scheme",
+      "body": "The people selling grind are grinding to sell you courses about grinding."
+    },
+    {
+      "type": "quote",
+      "quote": "If you need an app to drink water, the problem isn't hydration.",
+      "source": "The internet, probably"
+    },
+    {
+      "type": "cta",
+      "headline": "Work smarter, not louder",
+      "body": "Drop your hottest take in the comments below.",
+      "action": "share"
+    }
+  ]
+}

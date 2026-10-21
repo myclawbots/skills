@@ -1,0 +1,43 @@
+{
+  "topic": "Business lessons",
+  "handle": "@lemmedecode",
+  "slides": [
+    {
+      "type": "hook",
+      "kicker": "ESSENTIAL REFLECTIONS",
+      "headline": "Things I wish I knew at 25",
+      "sub": "Seven lessons that took me a decade to learn the hard way."
+    },
+    {
+      "type": "point",
+      "headline": "Your network is your safety net",
+      "body": "Not the LinkedIn kind. The three people you call when everything falls apart."
+    },
+    {
+      "type": "list",
+      "headline": "Core rules to live by",
+      "items": [
+        "Revenue hides broken systems",
+        "Say no 10x more than you say yes",
+        "Patience is an offensive strategy"
+      ]
+    },
+    {
+      "type": "quote",
+      "quote": "The goal isn't to be busy. The goal is to be effective.",
+      "source": "A mentor who saved my twenties"
+    },
+    {
+      "type": "stat",
+      "figure": "3",
+      "unit": "yr",
+      "body": "is how long the average founder takes to find real product-market fit. Patience is a strategy."
+    },
+    {
+      "type": "cta",
+      "headline": "Start before you're ready",
+      "body": "Perfection is procrastination in disguise. Build quietly and let results speak.",
+      "action": "save"
+    }
+  ]
+}

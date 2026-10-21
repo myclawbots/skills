@@ -1,0 +1,49 @@
+{
+  "topic": "Personal brand",
+  "handle": "@lemmedecode",
+  "logo": "./assets/logo.svg",
+  "slides": [
+    {
+      "type": "hook",
+      "kicker": "EXECUTIVE PLAYBOOK",
+      "headline": "Build a personal brand in 5 steps",
+      "sub": "No fluff. No followers needed. Just a system that compounds."
+    },
+    {
+      "type": "point",
+      "headline": "Pick one platform & go deep",
+      "body": "Master one channel before you spread thin. Authority is built through sustained presence, not omnipresence."
+    },
+    {
+      "type": "point",
+      "headline": "Document what you build",
+      "body": "Share what you're already doing in real time. Your daily process is someone else's breakthrough."
+    },
+    {
+      "type": "list",
+      "headline": "The compounding levers",
+      "items": [
+        "Consistent high-signal publishing cadence",
+        "Direct audience relationship via private channels",
+        "Repurposing insights into flagship essays"
+      ]
+    },
+    {
+      "type": "stat",
+      "figure": "6",
+      "unit": "mo",
+      "body": "of consistent posting before most creators see compounding inbound opportunities."
+    },
+    {
+      "type": "quote",
+      "quote": "Your brand is what people say about you when you're not in the room.",
+      "source": "Jeff Bezos"
+    },
+    {
+      "type": "cta",
+      "headline": "Start building today",
+      "body": "Revisit this playbook every quarter to keep your brand aligned with your ambitions.",
+      "action": "follow"
+    }
+  ]
+}
