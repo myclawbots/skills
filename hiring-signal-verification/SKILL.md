@@ -15,6 +15,7 @@ description: |
 author:
   name: Peter S. Borkovich
   url: https://linkedin.com/in/petersborkovich
+  title: "VP Americas Sales @ HiBob"
 license: MIT
 category: sales
 tags: [signals, sales, revops]

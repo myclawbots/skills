@@ -6,6 +6,7 @@ description: |
 author:
   name: Justin Blij
   url: https://www.linkedin.com/in/jusblij
+  title: "Founder @ GTM Digital"
 license: MIT
 category: general
 tags: [hiring, sales, leadership]

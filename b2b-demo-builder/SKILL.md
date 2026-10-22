@@ -6,6 +6,7 @@ description: |
 author:
   name: Monica Dinu
   url: https://linkedin.com/in/monicadinu
+  title: "VP Growth & Marketing @ Alasco"
 license: MIT
 category: sales
 tags: [sales, marketing]

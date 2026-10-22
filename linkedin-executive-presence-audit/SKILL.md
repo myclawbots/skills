@@ -6,6 +6,7 @@ description: |
 author:
   name: Gaetano Romeo
   url: https://www.linkedin.com/in/romeogaetano/
+  title: "Head of Global Digital Marketing & Demand Generation @ EasyVista"
 license: MIT
 category: marketing
 tags: [influencers, marketing, leadership]

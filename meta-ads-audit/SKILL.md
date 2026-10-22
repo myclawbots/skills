@@ -6,6 +6,7 @@ description: |
 author:
   name: Aditya Sriram
   url: https://www.linkedin.com/in/adityasriram/
+  title: "Co-Founder @ GoMarble AI"
 license: MIT
 category: marketing
 tags: [ads]

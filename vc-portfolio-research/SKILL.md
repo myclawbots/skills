@@ -6,6 +6,7 @@ description: |
 author:
   name: Brad Smith
   url: https://linkedin.com/in/bradops
+  title: "Startups & Investor Partnerships"
 license: MIT
 category: general
 tags: [research]

@@ -8,6 +8,7 @@ description: |
 author:
   name: Ido Goldberg
   url: https://www.linkedin.com/in/ido-goldberg-ab1590b0/
+  title: "Co-Founder & CPO"
 license: MIT
 category: sales
 tags: [outreach]

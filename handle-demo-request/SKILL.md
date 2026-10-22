@@ -13,6 +13,7 @@ description: |
 author:
   name: Ariel Cohen
   url: https://linkedin.com/in/arielcohen-aigrowth
+  title: Founding Growth Engineer
 license: MIT
 category: sales
 tags: [signals, sales, revops, demand-gen]

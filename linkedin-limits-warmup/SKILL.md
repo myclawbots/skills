@@ -6,6 +6,7 @@ description: |
 author:
   name: Alex Vacca
   url: https://linkedin.com/in/alex-vacca
+  title: "Founder & CEO @ Frontal"
 license: MIT
 category: sales
 tags: [outreach]

@@ -10,6 +10,7 @@ description: |
 author:
   name: Danni Chen
   url: https://www.linkedin.com/in/dannichen1/
+  title: "Head of Product & GTM, AI"
 license: MIT
 category: marketing
 tags: [influencers, marketing, leadership]

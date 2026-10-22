@@ -14,6 +14,7 @@ description: |
 author:
   name: Rob Snyder
   url: https://linkedin.com/in/rsnyder1
+  title: Author, The Power of Pull
 license: MIT
 category: sales
 tags: [sales]

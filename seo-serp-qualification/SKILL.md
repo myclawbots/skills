@@ -6,6 +6,7 @@ description: |
 author:
   name: Sam Dunning
   url: https://linkedin.com/in/samdunning
+  title: "Founder @ Breaking B2B"
 license: MIT
 category: marketing
 tags: [seo]

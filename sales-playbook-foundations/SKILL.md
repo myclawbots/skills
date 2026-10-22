@@ -6,6 +6,7 @@ description: |
 author:
   name: "Kevin \"KD\" Dorsey"
   url: https://linkedin.com/in/kddorsey3
+  title: CRO
 license: MIT
 category: sales
 tags: [sales]

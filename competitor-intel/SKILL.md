@@ -10,6 +10,7 @@ description: |
 author:
   name: Yoni Tserruya
   url: https://linkedin.com/in/yonitserruya
+  title: "Co-Founder & CEO"
 license: MIT
 category: general
 tags: [research, sales]

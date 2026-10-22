@@ -6,6 +6,7 @@ description: |
 author:
   name: Jorge Macías
   url: https://linkedin.com/in/jorge-b-macias
+  title: "Founder @ The GTM Engineering Company"
 license: MIT
 category: sales
 tags: [signals]

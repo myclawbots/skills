@@ -6,6 +6,7 @@ description: |
 author:
   name: Dave Engel
   url: https://www.linkedin.com/in/dave-engel-7862744
+  title: "Founder @ Confra"
 license: MIT
 category: marketing
 tags: [events]

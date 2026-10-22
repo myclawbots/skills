@@ -12,6 +12,7 @@ description: |
 author:
   name: Tanyo Gochev
   url: https://www.linkedin.com/in/tanyo/
+  title: "Co-Founder & Head of GTM, The Demand Department"
 license: MIT
 category: sales
 tags: [prospecting]

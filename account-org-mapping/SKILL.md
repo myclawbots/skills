@@ -6,6 +6,7 @@ description: |
 author:
   name: Nylan Richard
   url: https://linkedin.com/in/nylan-richard
+  title: "AI Expert in Residence @ FullEnrich"
 license: MIT
 category: sales
 tags: [prospecting, sales, revops]

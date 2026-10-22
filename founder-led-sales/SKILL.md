@@ -11,6 +11,7 @@ description: |
 author:
   name: "Shane O'Connor"
   url: https://www.linkedin.com/in/devtoolgtm
+  title: Founder, The GTM Co-Founder
 license: MIT
 category: sales
 tags: [sales]

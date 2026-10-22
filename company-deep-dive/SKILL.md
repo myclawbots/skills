@@ -15,6 +15,7 @@ description: |
 author:
   name: Uriel Knorovich
   url: https://linkedin.com/in/urik
+  title: "Co-Founder & CEO, Nimble"
 license: MIT
 category: general
 tags: [research, sales]

@@ -12,6 +12,7 @@ description: |
 author:
   name: Vesselin Malev
   url: https://www.linkedin.com/in/vesselinmalev/
+  title: Managing Director, The Demand Department
 license: MIT
 category: marketing
 tags: [positioning, marketing, sales]

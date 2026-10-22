@@ -15,6 +15,7 @@ description: |
 author:
   name: Elad Hefetz
   url: https://www.linkedin.com/in/eladh/
+  title: CEO, Airfleet
 license: MIT
 category: marketing
 tags: [aeo]

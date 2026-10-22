@@ -6,6 +6,7 @@ description: |
 author:
   name: Thomas Marcelle
   url: https://linkedin.com/in/thomas-marcelle
+  title: Co-founder
 license: MIT
 category: marketing
 tags: [influencers]

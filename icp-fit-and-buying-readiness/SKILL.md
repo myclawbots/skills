@@ -13,6 +13,7 @@ description: |
 author:
   name: Brian Carroll
   url: https://www.linkedin.com/in/brianjcarroll/
+  title: CEO, markempa
 license: MIT
 category: sales
 tags: [sales, marketing, revops]

@@ -10,6 +10,7 @@ description: |
 author:
   name: Imad Badreddine
   url: https://www.linkedin.com/in/imad-ngl/
+  title: Founder, Alpaca Leads
 license: MIT
 category: sales
 tags: [outreach, sales]

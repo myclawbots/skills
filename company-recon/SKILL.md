@@ -6,6 +6,7 @@ description: |
 author:
   name: Justin Rowe
   url: https://www.linkedin.com/in/justin-rowe-4043339b
+  title: "Founder & CMO @ Impactable"
 license: MIT
 category: general
 tags: [research]

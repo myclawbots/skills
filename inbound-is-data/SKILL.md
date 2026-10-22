@@ -12,6 +12,7 @@ description: |
 author:
   name: Nadav David
   url: https://www.linkedin.com/in/nadavdvd/
+  title: Strategic Partnerships Manager, Kidoz
 license: MIT
 category: sales
 tags: [revops]

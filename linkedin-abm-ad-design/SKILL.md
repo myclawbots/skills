@@ -6,6 +6,7 @@ description: |
 author:
   name: Emilia Korczynska
   url: https://linkedin.com/in/emiliakorczynska
+  title: "VP of Marketing @ Userpilot"
 license: MIT
 category: sales
 tags: [abm]

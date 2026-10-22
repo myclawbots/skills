@@ -6,6 +6,7 @@ description: |
 author:
   name: Ivan Falco
   url: https://linkedin.com/in/ivanfalco
+  title: "Ads Engineer @ Frontal"
 license: MIT
 category: sales
 tags: [abm]

@@ -6,6 +6,7 @@ description: |
 author:
   name: Sam Jacobs
   url: https://linkedin.com/in/samfjacobs
+  title: "Founder & CEO @ Pavilion"
 license: MIT
 category: sales
 tags: [revops]

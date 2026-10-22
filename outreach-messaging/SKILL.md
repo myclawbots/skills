@@ -6,6 +6,7 @@ description: |
 author:
   name: Maja Voje
   url: https://linkedin.com/in/majavoje
+  title: Founder
 license: MIT
 category: sales
 tags: [outreach]

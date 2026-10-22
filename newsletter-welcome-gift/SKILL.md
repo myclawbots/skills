@@ -6,6 +6,7 @@ description: |
 author:
   name: Daniel Bustamante
   url: https://linkedin.com/in/dbusta
+  title: "Founder & CEO @ Velocity"
 license: MIT
 category: marketing
 tags: [newsletters]

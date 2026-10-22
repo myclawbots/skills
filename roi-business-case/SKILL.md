@@ -6,6 +6,7 @@ description: |
 author:
   name: Gal Aga
   url: https://linkedin.com/in/galaga
+  title: "Co-Founder & CEO @ Aligned"
 license: MIT
 category: sales
 tags: [deals, sales]

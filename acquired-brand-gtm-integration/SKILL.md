@@ -9,6 +9,7 @@ description: |
 author:
   name: Gerrit Kesten
   url: https://www.linkedin.com/in/gerritkesten
+  title: Co-Founder, job.rocks
 license: MIT
 category: sales
 tags: [revops, leadership, marketing]

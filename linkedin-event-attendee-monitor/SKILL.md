@@ -6,6 +6,7 @@ description: |
 author:
   name: Brianne Thomas
   url: https://www.linkedin.com/in/briannecordima
+  title: VP Marketing at Elastic Path
 license: MIT
 category: marketing
 tags: [events]

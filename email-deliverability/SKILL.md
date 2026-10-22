@@ -11,6 +11,7 @@ description: |
 author:
   name: Joshua Waldman
   url: https://www.linkedin.com/in/joshuawaldman/
+  title: Founder, SendX
 license: MIT
 category: marketing
 tags: [newsletters, marketing, revops]

@@ -8,6 +8,7 @@ description: |
 author:
   name: Manny Medina
   url: https://linkedin.com/in/medinism
+  title: "Founder & CEO"
 license: MIT
 category: sales
 tags: [pricing]

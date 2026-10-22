@@ -13,6 +13,7 @@ description: |
 author:
   name: Osnat Lidor
   url: https://www.linkedin.com/in/osnatgevalidor/
+  title: "Owner @ Demand Gen Studio"
 license: MIT
 category: marketing
 tags: [positioning]

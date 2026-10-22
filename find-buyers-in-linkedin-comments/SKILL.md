@@ -14,6 +14,7 @@ description: |
 author:
   name: Thomas Maitre
   url: https://www.linkedin.com/in/thomasmaitre/
+  title: Co-founder, GTM Otto
 license: MIT
 category: sales
 tags: [prospecting, sales]

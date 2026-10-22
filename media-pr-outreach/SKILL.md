@@ -6,6 +6,7 @@ description: |
 author:
   name: Gali Firon
   url: https://www.linkedin.com/in/gali-firon-a43664201/
+  title: "Sales & Marketing Coordinator, Kidoz Inc."
 license: MIT
 category: sales
 tags: [outreach, marketing]

@@ -14,6 +14,7 @@ description: |
 author:
   name: Dima Bilous
   url: https://www.linkedin.com/in/dima-bilous
+  title: Founder, Anfloy
 license: MIT
 category: sales
 tags: [outreach, sales]

@@ -6,6 +6,7 @@ description: |
 author:
   name: Max Nimmo
   url: https://linkedin.com/in/max-nimmo
+  title: "Founder @ CreatorWorks"
 license: MIT
 category: marketing
 tags: [influencers]

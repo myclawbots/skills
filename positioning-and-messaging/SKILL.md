@@ -14,6 +14,7 @@ description: |
 author:
   name: Chris Rodde
   url: https://www.linkedin.com/in/rodde/
+  title: "Co-Founder & CMO, Two Spruce Partners"
 license: MIT
 category: marketing
 tags: [positioning, marketing]

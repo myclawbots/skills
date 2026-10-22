@@ -6,6 +6,7 @@ description: |
 author:
   name: Ryan Iyengar
   url: https://www.linkedin.com/in/ryaniyengar
+  title: "CEO & Founder, Full Stack GTM"
 license: MIT
 category: sales
 tags: [revops, leadership]

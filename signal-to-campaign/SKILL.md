@@ -6,6 +6,7 @@ description: |
 author:
   name: Bojan Djakonovic Berisavljevic
   url: https://linkedin.com/in/bojandjb
+  title: "Head of Innovation @ BLYNKED"
 license: MIT
 category: sales
 tags: [signals]

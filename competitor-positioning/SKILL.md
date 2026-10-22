@@ -13,6 +13,7 @@ description: |
 author:
   name: Alon Goldenberg
   url: https://www.linkedin.com/in/alongoldenberg/
+  title: Technical Product Manager, Nimbleway
 license: MIT
 category: marketing
 tags: [positioning, marketing]

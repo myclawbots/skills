@@ -12,6 +12,7 @@ description: |
 author:
   name: Erwann Lefevre
   url: https://www.linkedin.com/in/erwann-lefevre/
+  title: "Growth & GTM Engineer, La Growth Machine"
 license: MIT
 category: sales
 tags: [outreach, sales, revops]

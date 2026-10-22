@@ -13,6 +13,7 @@ description: |
 author:
   name: Jason Mesiarik
   url: https://www.linkedin.com/in/jasonmesiarik
+  title: "Founder & CEO @ Management OS"
 license: MIT
 category: sales
 tags: [revops, leadership, sales]

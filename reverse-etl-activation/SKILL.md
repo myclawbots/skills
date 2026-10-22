@@ -6,6 +6,7 @@ description: |
 author:
   name: Austin Hay
   url: https://linkedin.com/in/austinahay
+  title: "Operating Partner @ Khosla Ventures"
 license: MIT
 category: sales
 tags: [revops]

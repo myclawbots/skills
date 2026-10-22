@@ -6,6 +6,7 @@ description: |
 author:
   name: Amos Bar-Joseph
   url: https://www.linkedin.com/in/amos-bar-joseph/
+  title: "CEO & Co-Founder"
 license: MIT
 category: general
 tags: [leadership, sales, marketing, revops]

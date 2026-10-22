@@ -6,6 +6,7 @@ description: |
 author:
   name: Amith TK
   url: https://www.linkedin.com/in/amith-tk/
+  title: Co-founder, MotiveGTM
 license: MIT
 category: marketing
 tags: [positioning, marketing]

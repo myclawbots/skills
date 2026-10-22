@@ -6,6 +6,7 @@ description: |
 author:
   name: Nicolas Fry
   url: https://www.linkedin.com/in/nicolasfry
+  title: Founder, TurboDocx
 license: MIT
 category: sales
 tags: [deals, sales, revops]

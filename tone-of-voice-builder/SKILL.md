@@ -6,6 +6,7 @@ description: |
 author:
   name: Nick Malekos
   url: https://www.linkedin.com/in/nickmalekos
+  title: Head of Demand, Cyberbit
 license: MIT
 category: marketing
 tags: [positioning, outreach]

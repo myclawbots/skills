@@ -13,6 +13,7 @@ description: |
 author:
   name: Dušan Vystrčil
   url: https://www.linkedin.com/in/dusanvystrcil/
+  title: Product Manager, Apify AI team
 license: MIT
 category: sales
 tags: [signals, sales]

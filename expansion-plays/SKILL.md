@@ -6,6 +6,7 @@ description: |
 author:
   name: Jeremy Hurst
   url: https://linkedin.com/in/jeremyhurstprofile
+  title: VP of Autonomous GTM
 license: MIT
 category: sales
 tags: [deals, sales]

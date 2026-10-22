@@ -6,6 +6,7 @@ description: |
 author:
   name: Ryan Estes
   url: https://linkedin.com/in/estesryan
+  title: "Founder @ AI For Founders"
 license: MIT
 category: marketing
 tags: [newsletters]

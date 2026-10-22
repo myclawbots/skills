@@ -12,6 +12,7 @@ description: |
 author:
   name: Pete Mientkiewicz
   url: https://www.linkedin.com/in/pete-mientkiewicz/
+  title: Founder, ScaleUP Systems
 license: MIT
 category: sales
 tags: [outreach, marketing, demand-gen]

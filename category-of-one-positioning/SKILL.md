@@ -6,6 +6,7 @@ description: |
 author:
   name: Luke Shalom
   url: https://linkedin.com/in/lukeshalom
+  title: "Founder & CEO @ Atticus"
 license: MIT
 category: marketing
 tags: [positioning]

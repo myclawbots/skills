@@ -6,6 +6,7 @@ description: |
 author:
   name: Rutger Katz
   url: https://www.linkedin.com/in/rutgerkatz
+  title: "Founder @ Neon Triforce — AI-Ready Revenue Systems"
 license: MIT
 category: sales
 tags: [outreach]

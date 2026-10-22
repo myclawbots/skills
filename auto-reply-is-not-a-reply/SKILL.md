@@ -9,6 +9,7 @@ description: |
 author:
   name: Lucas Godtfredsen
   url: https://www.linkedin.com/in/lucas-godtfredsen-b9a19614/
+  title: Founder, GTM Now
 license: MIT
 category: sales
 tags: [outreach, sales, revops]

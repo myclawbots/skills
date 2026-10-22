@@ -6,6 +6,7 @@ description: |
 author:
   name: Sangram Vajre
   url: https://linkedin.com/in/sangramvajre
+  title: "Co-founder & CEO"
 license: MIT
 category: sales
 tags: [revops, sales, marketing]

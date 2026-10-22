@@ -6,6 +6,7 @@ description: |
 author:
   name: Tim Yakubson
   url: https://linkedin.com/in/timyakubson
+  title: "Founder @ B2B Boosted"
 license: MIT
 category: sales
 tags: [outreach]

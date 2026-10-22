@@ -13,6 +13,7 @@ description: |
 author:
   name: Roman Palii
   url: https://www.linkedin.com/in/roman-palii/
+  title: Founder
 license: MIT
 category: sales
 tags: [revops, sales]

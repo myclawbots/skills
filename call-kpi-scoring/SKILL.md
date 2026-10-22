@@ -18,6 +18,7 @@ description: |
 author:
   name: Amit Rotstein
   url: https://www.linkedin.com/in/amitrotstein/
+  title: Head of Product, Spotlight.ai
 license: MIT
 category: sales
 tags: [sales, revops, coaching]

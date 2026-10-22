@@ -6,6 +6,7 @@ description: |
 author:
   name: Sabahudin Murtić
   url: https://linkedin.com/in/sabahudin-murtic
+  title: "Founder @ Unstuck"
 license: MIT
 category: general
 tags: [research]

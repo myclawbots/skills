@@ -10,6 +10,7 @@ description: |
 author:
   name: Huxley Peckham
   url: https://www.linkedin.com/in/huxley-peckham
+  title: Founder, Tech Horizon Labs
 license: MIT
 category: marketing
 tags: [aeo, marketing]

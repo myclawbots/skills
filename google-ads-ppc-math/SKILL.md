@@ -11,6 +11,7 @@ description: |
 author:
   name: John Williams
   url: https://www.linkedin.com/in/johnmichaelwilliams
+  title: Founder, AHMEEGO
 license: MIT
 category: marketing
 tags: [ads]

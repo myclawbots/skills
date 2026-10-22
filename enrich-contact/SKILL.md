@@ -10,6 +10,7 @@ description: |
 author:
   name: Omer Levy
   url: https://www.linkedin.com/in/omer-levy-5213b4221
+  title: GTM AI Solution Architect
 license: MIT
 category: sales
 tags: [prospecting, sales]

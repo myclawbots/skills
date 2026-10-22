@@ -6,6 +6,7 @@ description: |
 author:
   name: Katya Tarapovskaia
   url: https://linkedin.com/in/katya-tarapovskaia
+  title: "Head of Marketing & AI Solutions @ YouStellar"
 license: MIT
 category: sales
 tags: [abm]

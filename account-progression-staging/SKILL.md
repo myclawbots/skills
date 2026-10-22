@@ -6,6 +6,7 @@ description: |
 author:
   name: Steve Armenti
   url: https://linkedin.com/in/stephenarmenti
+  title: "Founder @ twelfth agency"
 license: MIT
 category: sales
 tags: [abm]

@@ -16,6 +16,7 @@ description: |
 author:
   name: Boaz Descalo
   url: https://www.linkedin.com/in/descalo/
+  title: "Founder & CEO, Node8"
 license: MIT
 category: marketing
 tags: [events, marketing, sales]

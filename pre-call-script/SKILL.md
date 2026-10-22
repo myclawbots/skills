@@ -14,6 +14,7 @@ description: |
 author:
   name: Dyanesh Perumal
   url: https://www.linkedin.com/in/dyaneshp
+  title: "Principal GTM Engineer & Founder, Nett New"
 license: MIT
 category: sales
 tags: [outreach, sales]

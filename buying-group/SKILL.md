@@ -10,6 +10,7 @@ description: |
 author:
   name: Gal Tamir
   url: https://www.linkedin.com/in/gtamir
+  title: Director of Marketing Operations
 license: MIT
 category: sales
 tags: [abm, sales]

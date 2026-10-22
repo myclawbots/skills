@@ -14,6 +14,7 @@ description: |
 author:
   name: Khondokar MD Asiful Islam
   url: https://www.linkedin.com/in/kasif25/
+  title: Co-founder, SerpDad. Organizer, The SEO Event
 license: MIT
 category: marketing
 tags: [seo, marketing]

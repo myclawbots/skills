@@ -16,6 +16,7 @@ description: |
 author:
   name: Nikhil Mirza
   url: https://www.linkedin.com/in/nikhilmirza/
+  title: Sr Director, Sales Operations, Taboola
 license: MIT
 category: sales
 tags: [deals, sales, revops]

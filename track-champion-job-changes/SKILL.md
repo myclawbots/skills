@@ -16,6 +16,7 @@ description: |
 author:
   name: Sung Jo
   url: https://linkedin.com/in/sungwan-jo-7193881b
+  title: "SEO/AEO Lead @ Clay"
 license: MIT
 category: sales
 tags: [signals, sales, revops]

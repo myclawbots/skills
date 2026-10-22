@@ -6,6 +6,7 @@ description: |
 author:
   name: Scott Wueschinski
   url: https://www.linkedin.com/in/scottwueschinski
+  title: Co-Founder, GTMify
 license: MIT
 category: sales
 tags: [revops, sales, marketing, leadership]

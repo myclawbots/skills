@@ -6,6 +6,7 @@ description: |
 author:
   name: Amir Baldiga
   url: https://www.linkedin.com/in/amirbaldiga
+  title: Founder, Zooq
 license: MIT
 category: sales
 tags: [prospecting, sales, icp]

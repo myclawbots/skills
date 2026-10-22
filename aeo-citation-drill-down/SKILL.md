@@ -6,6 +6,7 @@ description: |
 author:
   name: Yahav Fuchs
   url: https://linkedin.com/in/yahavf
+  title: Founder
 license: MIT
 category: marketing
 tags: [aeo]

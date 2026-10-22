@@ -12,6 +12,7 @@ description: |
 author:
   name: Eliezer Cohen
   url: https://www.linkedin.com/in/eliezercohen/
+  title: "Head of Global Sales & Partnerships, GoPerfect"
 license: MIT
 category: sales
 tags: [revops, sales]

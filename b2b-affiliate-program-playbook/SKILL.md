@@ -6,6 +6,7 @@ description: |
 author:
   name: Victor Moen
   url: https://linkedin.com/in/victormoen
+  title: "Co-Founder & CEO @ Affilial"
 license: MIT
 category: marketing
 tags: [affiliates]

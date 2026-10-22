@@ -9,6 +9,7 @@ description: |
 author:
   name: Udi Cohen
   url: https://www.linkedin.com/in/udi-cohen-79831052
+  title: Director of Revenue Operations
 license: MIT
 category: sales
 tags: [revops, sales]

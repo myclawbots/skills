@@ -9,6 +9,7 @@ description: |
 author:
   name: Peter Cools
   url: https://www.linkedin.com/in/coolspeter/
+  title: Founder, Rodz
 license: MIT
 category: sales
 tags: [signals, outreach]

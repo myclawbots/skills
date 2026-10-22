@@ -6,6 +6,7 @@ description: |
 author:
   name: Din Arbel
   url: https://linkedin.com/in/din-arbel
+  title: "GTM @ Utila"
 license: MIT
 category: sales
 tags: [abm]
